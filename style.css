@@ -1,0 +1,7 @@
+main > #list-of-products > li > img {
+    border: solid 1px black;
+}
+
+main > #list-of-products > li {
+  margin-bottom: 50px;
+}
