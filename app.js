@@ -2,6 +2,8 @@
 
 Product.allProducts = [];
 var totalClicks = 0;
+// Display product functions needs previous indices
+var productIndexOnPage = [0, 1, 2];
 
 function Product(name, src) {
   this.liveClicks = 0;
@@ -39,22 +41,53 @@ function handleClickOnProduct(event) {
       }
     }
     displayProducts();
-
     if (totalClicks === 25) {
       listOfProducts.removeEventListener('click', handleClickOnProduct);
       displayFinalProducts();
+      renderChart();
     }
   }
 };
 
 function displayProducts() {
   var index1 = Math.floor(Math.random() * Product.allProducts.length);
+
+  while (
+    index1 === productIndexOnPage[0] ||
+    index1 === productIndexOnPage[1] ||
+    index1 === productIndexOnPage[2]
+    ) {
+      index1 = Math.floor(Math.random() * Product.allProducts.length);
+  }
+
   var index2 = Math.floor(Math.random() * Product.allProducts.length);
+
+  while (
+    index2 === index1 ||
+    index2 === productIndexOnPage[0] ||
+    index2 === productIndexOnPage[1] ||
+    index2 === productIndexOnPage[2]
+    ) {
+    index2 = Math.floor(Math.random() * Product.allProducts.length);
+  }
+
   var index3 = Math.floor(Math.random() * Product.allProducts.length);
+
+  while (
+    index3 === index1 ||
+    index3 === index2 ||
+    index3 === productIndexOnPage[0] ||
+    index3 === productIndexOnPage[1] ||
+    index3 === productIndexOnPage[2]
+  ) {
+    index3 = Math.floor(Math.random() * Product.allProducts.length);
+  }
 
   var newProduct1 = Product.allProducts[index1];
   var newProduct2 = Product.allProducts[index2];
   var newProduct3 = Product.allProducts[index3];
+
+  productIndexOnPage = [index1, index2, index3];
 
   var productList = document.getElementById('list-of-products');
   productList.innerHTML = '';
@@ -65,6 +98,7 @@ function displayProducts() {
   newProduct1.timesRendered++;
   newProduct2.timesRendered++;
   newProduct3.timesRendered++;
+
 };
 
 function displayFinalProducts() {
@@ -100,3 +134,67 @@ new Product('Unicorn Meat', 'img/unicorn.jpg');
 new Product('Tentacle USB', 'img/usb.gif');
 new Product('Not a Watering Can', 'img/water-can.jpg');
 new Product('Egg Wine Glass', 'img/wine-glass.jpg');
+
+displayProducts();
+
+function renderChart() {
+  var labelArray = [];
+
+  for (var i = 0; i < Product.allProducts.length; i++) {
+    labelArray.push(Product.allProducts[i].name)
+  }
+
+  var productDataArray = [];
+
+  for (var i = 0; i < Product.allProducts.length; i++) {
+    productDataArray.push(Product.allProducts[i].liveClicks)
+  }
+
+  var timesProductRenderedArray = [];
+
+  for (var i = 0; i < Product.allProducts.length; i++) {
+    timesProductRenderedArray.push(Product.allProducts[i].timesRendered)
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labelArray,
+        datasets: [{
+            label: '# of Votes',
+            data: productDataArray,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }, {
+          label: '# of times Rendered',
+          data: timesProductRenderedArray,
+          type: 'line'
+        }],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+  });
+};
