@@ -5,7 +5,7 @@
 body {
   width: 960px;
   margin: 0 auto;
-  background-color: rgb(20, 201, 233); 
+  background-color: rgb(84, 222, 246);
 }
 
 h1 {
@@ -13,6 +13,7 @@ h1 {
   height: 100px;
   font-size: 45px;
   font-weight: bold;
+  background-color: rgb(232, 164, 9); 
 }
 
 main > #products > ul {
@@ -26,12 +27,24 @@ main > #products > ul > li {
   margin-left: 52px;
 }
 
-main > #products > ul > li > img {
-
-}
-
 main > #products > ul > li > p {
   text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: rgb(232, 164, 9);
+}
+
+main > #list {
+  width: 78%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  background-color: rgb(232, 164, 9);
+}
+
+main > #list > ol > li {
+  font-size: 25px;
+  list-style-type: decimal;
+  list-style-position: inside;
 }
 
 main > #list-of-products > li > img {
@@ -40,4 +53,14 @@ main > #list-of-products > li > img {
 
 main > #list-of-products > li {
   margin-bottom: 50px;
+}
+
+main > #chart {
+  margin: 30px 0px 30px 0px;
+}
+
+#myChart {
+  width: 800px !important;
+  height: 800px !important;
+  margin: 0 auto;
 }
