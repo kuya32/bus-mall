@@ -219,7 +219,6 @@ if(parsedProducts !== null) {
   for (var i = 0; i < parsedProducts.length; i++) {
     new Product(parsedProducts[i].liveClicks, parsedProducts[i].name, parsedProducts[i].itemSrc, parsedProducts[i].timesRendered)
   };
-  // displayFinalProducts();
 } else {
   new Product(0, 'R2D2 Suitcase', 'img/bag.jpg', 0);
   new Product(0, 'Banana Slicer', 'img/banana.jpg', 0);
